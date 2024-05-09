@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array List</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+
+    const {useState} = React;
+
+    const App = () => {
+        const employees = [
+            {
+                id: 1,
+                name: "Vlad",
+                surname: "Lemesh",
+                salary: 200,
+                checked: false
+            },
+            {
+                id: 2,
+                name: "Max",
+                surname: "Brant",
+                salary: 300,
+                checked: false
+            },
+            {
+                id: 3,
+                name: "Andrew",
+                surname: "Prise",
+                salary: 100,
+                checked: false
+            },
+        ];
+
+        const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+        const handleCheckboxChange = (id) => {
+            setSelectedEmployees((prevSelected) => {
+                const updatedSelected = [...prevSelected];
+                const employeeIndex = updatedSelected.findIndex((emp) => emp.id === id);
+                if (employeeIndex !== -1) {
+                    updatedSelected.splice(employeeIndex, 1);
+                } else {
+                    const employee = employees.find((emp) => emp.id === id);
+                    if (employee) {
+                        updatedSelected.push(employee);
+                    }
+                }
+                return updatedSelected;
+            });
+        };
+
+        const calculateTotalSalary = () => {
+            let totalSalary = 0;
+            selectedEmployees.forEach((employee) => {
+                totalSalary += employee.salary;
+            });
+            return totalSalary;
+        };
+
+        const renderEmployees = employees.map((person) => (
+            <tr key={person.id}>
+                <td>{person.name}</td>
+                <td>{person.surname}</td>
+                <td>{person.salary}</td>
+                <td>
+                    <input
+                        type="checkbox"
+                        checked={person.checked}
+                        onChange={() => handleCheckboxChange(person.id)}
+                    />
+                </td>
+            </tr>
+        ));
+
+        return (
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Salary</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>{renderEmployees}</tbody>
+                    <tfoot>
+                        <tr>
+                            <td colSpan="3">TOTAL:</td>
+                            <td>{calculateTotalSalary()}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

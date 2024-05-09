@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React App</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+
+    const { useState } = React;
+    const { render } = ReactDOM;
+
+    const TodoList = () => {
+      const [todos, setTodos] = useState([]);
+      const [inputValue, setInputValue] = useState('');
+      const [editIndex, setEditIndex] = useState(-1);
+      const [editValue, setEditValue] = useState('');
+
+      const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+      };
+
+      const handleAddTodo = () => {
+        if (inputValue) {
+          setTodos([...todos, { text: inputValue, completed: false }]);
+          setInputValue('');
+        }
+      };
+
+      const handleDeleteTodo = (index) => {
+        setTodos(todos.filter((_, i) => i !== index));
+      };
+
+      const handleEditTodo = (index, text) => {
+        setEditIndex(index);
+        setEditValue(text);
+      };
+
+      const handleSaveTodo = (index) => {
+        setTodos(
+          todos.map((todo, i) => {
+            if (i === index) {
+              return { ...todo, text: editValue };
+            }
+            return todo;
+          })
+        );
+        setEditIndex(-1);
+        setEditValue('');
+      };
+
+      const handleToggleComplete = (index) => {
+        setTodos(
+          todos.map((todo, i) => {
+            if (i === index) {
+              return { ...todo, completed: !todo.completed };
+            }
+            return todo;
+          })
+        );
+      };
+
+      return (
+        <div>
+          <h2>TODO Лист</h2>
+          <input type="text" value={inputValue} onChange={handleInputChange} />
+          <button onClick={handleAddTodo}>Добавить задачу</button>
+          <ul>
+            {todos.map((todo, index) => (
+              <li key={index}>
+                {editIndex === index ? (
+                  <input
+                    type="text"
+                    value={editValue}
+                    onChange={(e) => setEditValue(e.target.value)}
+                  />
+                ) : (
+                  <span
+                    style={{
+                      textDecoration: todo.completed ? 'line-through' : 'none',
+                    }}
+                  >
+                    {todo.text}
+                  </span>
+                )}
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggleComplete(index)}
+                />
+                {editIndex === index ? (
+                  <button onClick={() => handleSaveTodo(index)}>Сохранить</button>
+                ) : (
+                  <button onClick={() => handleEditTodo(index, todo.text)}>Изменить</button>
+                )}
+                <button onClick={() => handleDeleteTodo(index)}>Удалить</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<TodoList />, document.getElementById('root'));
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Абзац</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+    const { render } = ReactDOM;
+
+    function App() {
+      const [inputText, setInputText] = useState('');
+      const [paragraphText, setParagraphText] = useState('');
+
+      const handleInputChange = (event) => {
+        const text = event.target.value;
+        setInputText(text);
+        setParagraphText(text);
+      };
+
+      return (
+        <div>
+          <input
+            type="text"
+            value={inputText}
+            onChange={handleInputChange}
+            placeholder="Введите текст"
+          />
+          <p>{paragraphText}</p>
+        </div>
+      );
+    }
+
+    render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    
+<div id="root"></div>
+
+<script type="text/babel">
+class Clock extends React.Component {
+   
+    constructor(props) {
+        super(props);
+        this.props ={format:12,timezone:new String}
+        this.state = {date: new Date(),formstr:new String
+    };
+       
+    }
+    //replacer = this.props.timezone.replace(':','.')
+    componentDidMount() {
+        if(this.props.timezone)
+        {
+            this.setState
+            ({
+            date: new Date(this.state.date.getTime()+this.state.date.getTimezoneOffset()*60000+Number(this.props.timezone.replace(':','.')).toFixed(0)*3600000
+            +(Number(this.props.timezone.replace(':','.'))%1)*6000000)  
+            })
+
+        }
+        else
+        {
+            this.setState
+            ({
+            date: new Date()  
+            })
+        }
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000,
+            
+            
+
+           
+
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+    
+    tick() {
+
+         
+        
+        
+        this.setState({
+            
+            date: new Date(this.state.date.getTime()+1000),
+            
+        });
+        
+        
+        
+    }
+    
+    render() {
+        return (
+            <div>
+                <h1>alter clock!</h1>
+                <h2>Сейчас {this.state.date.toLocaleTimeString(this.props.format==12?"en-US":"en-GB")}.</h2>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(
+    <Clock timezone="+4:00" />,
+    document.getElementById('root')
+);
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    
+<div id="root"></div>
+<script type="text/babel">
+
+
+class Jobselect extends React.Component {
+    constructor(props){
+        super(null)
+        this.props={}
+        this.state={}
+    }
+    
+    render() {
+        
+        return <div>
+            
+            <label for="job1"> <input type="radio" id="job1" name="job" value="1" onChange={this.props.onChange}/>
+            Программист</label>
+            
+            <label for="job2"><input type="radio" id="job2" name="job" value="2" onChange={this.props.onChange}/>
+            Дизайнер</label>
+
+            <label for="job3"><input type="radio" id="job3" name="job" value="3" onChange={this.props.onChange}/>
+            Преподаватель</label>
+
+            <label for="job4"><input type="radio" id="job4" name="job" value="4" onChange={this.props.onChange}/>
+            Электортехник</label>
+
+            <label for="job5"><input type="radio" id="job5" name="job" value="5" onChange={this.props.onChange}/>
+            Юрист </label>
+     </div> 
+
+     
+
+     }
+}
+
+
+
+class Jobrefs extends React.Component  {
+    constructor(props){
+        super(props)
+        this.props={}
+        this.state={}
+        
+    }
+    render() {
+        switch(Number(this.props.value)){
+            default:return null
+            case 1:return(
+                <div> 
+               
+                <a href="https://developer.mozilla.org/ru/"> mdn </a>
+                <a href="https://www.geeksforgeeks.org/"> geeksforgeeks </a>
+                <a href="https://stackoverflow.com/"> stackoverflow </a>
+                <a href="https://learn.javascript.ru/"> learn js </a>
+                <a href="https://habr.com/ru/"> habr </a>
+                <a href="https://dev.by/"> dev.by </a>
+                <a href="http://htmlbook.ru/html"> htmlbook </a>
+                </div>
+            )
+             case 2:return(
+                <div> 
+                
+                <a href="https://htmlcolorcodes.com/"> htmlcolorcodes </a>
+                <a href="http://htmlbook.ru/html"> htmlbook </a>
+                <a href="https://www.w3schools.com/"> w3schools </a>
+                <a href="https://tilda.cc/ru/"> tilda </a>
+                <a href="https://habr.com/ru/"> habr </a>
+                <a href="https://stackoverflow.com/"> stackoverflow </a>
+                <a href="https://www.figma.com/"> figma </a>
+                </div>
+            )
+             case 3:return(
+                <div> 
+               
+                <a href="https://adu.by/"> adu.by </a>
+                <a href="https://infourok.ru/"> инфоурок </a>
+                <a href="https://culture.ru/"> Культура.рф </a>
+                <a href="https://uchebniki.by/"> учебники.by </a>
+                <a href="http://www.obrazovanie.by"> образование.by </a>
+                <a href="http://edu.by"> Белорусский национальный образовательный Интернет-портал.  </a>
+                <a href="http://www.ug.ru/"> Учительская газета </a>
+                </div> 
+            )
+             case 4:return(
+            <div> 
+                
+                <a href="https://cxem.net/"> схем.net </a>
+                <a href="https://www.chipdip.by//"> chipdip </a>
+                <a href="https://belchip.by//"> belchip </a>
+                <a href="https://www.radiokot.ru/"> радиокот </a>
+                <a href="https://www.st.com/resource/en/programming_manual/pm0214-stm32-cortexm4
+                -mcus-and-mpus-programming-manual-stmicroelectronics.pdf"> stm32 manual </a>
+                <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-
+                Automotive-Microcontrollers-ATmega328P_Datasheet.pdf"> atmega 328p manual </a>
+                <a href="https://arduinomaster.ru/"> arduinomaster </a>
+            </div> 
+            )
+             case 5:return(
+            <div> 
+                
+                <a href="https://normativka.by/"> нормативка.by </a>
+                <a href="https://president.gov.by/ru/gosudarstvo/constitution/"> конституция рб </a>
+                <a href="https://pravo.by/document/?guid=3871&p0=hk9900275"> ук рб </a>
+                <a href="https://pravo.by/document/?guid=12551&p0=HK2100091&p1=1"> административный кодекс </a>
+                <a href="https://etalonline.by/"> эталон онлайн </a>
+                <a href="https://pravo.by/"> право.by </a>
+                <a href="http://bankzakonov.com/"> банк законов </a>
+            </div> 
+            )
+        }
+     }
+}
+
+class Container extends React.Component
+{
+constructor(props){
+        super(props)
+        this.props={}
+        this.state={value:"0"}
+        this.clickChange = this.clickChange.bind(this);
+}
+
+clickChange(handler){ 
+    
+    this.setState({value:handler.target.value}) ;
+    }
+
+render() {return <React.Fragment><Jobselect onChange={this.clickChange}/>
+                 <Jobrefs value={this.state.value} /></React.Fragment>}
+
+}
+
+ReactDOM.render(
+   <Container/>,
+    document.getElementById('root')
+);
+    </script>
+</body>
+</html>
